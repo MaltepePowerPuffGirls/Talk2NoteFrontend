@@ -1,4 +1,4 @@
-import axios from "../services/api";
+import axiosCustom from "../services/api";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -56,7 +56,7 @@ const Register = () => {
       password: '',
     })
 
-    await axios.post(REGISTER_URL, {
+    await axiosCustom.post(REGISTER_URL, {
       firstname: registerForm.firstname,
       lastname: registerForm.lastname,
       email: registerForm.email,

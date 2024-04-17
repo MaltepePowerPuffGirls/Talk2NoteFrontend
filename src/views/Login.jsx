@@ -4,7 +4,7 @@ import useInput from "../hooks/useInput";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useToggle from "../hooks/useToggle";
 import { toast } from "react-toastify";
-import axios from "../services/api";
+import axiosCustom from "../services/api";
 
 const LOGIN_URL = "/api/v1/auth/authenticate";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,7 +39,7 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         LOGIN_URL,
         {
           email: user,
