@@ -4,13 +4,17 @@ import useProgressiveImg from "../../hooks/useProgressiveImg";
 
 
 const AuthLayout = () => {
-  const [src, { blur }] = useProgressiveImg("/src/assets/login_bg_down.png", "/src/assets/login_bg.png");
+  const [src, { blur }] = useProgressiveImg("assets/login_bg_down.png", "assets/login_bg.png");
   return (
     <div
-      className="w-screen object-contain relative bg-center h-screen flex items-center justify-center text-white transition-all"
+      className="w-screen  relative bg-center h-screen flex items-center justify-center text-white transition-all"
     >
     <img
         src={src}
+        style={{
+          filter : blur ? 'blur(1px)' : '',
+          WebkitFilter: blur ? 'blur(1px)' : ''
+        }}
         className="w-full h-full absolute top-0 left-0 z-[-1] object-cover transition-all"
       />
       <div
