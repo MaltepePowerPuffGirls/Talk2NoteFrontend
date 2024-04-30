@@ -7,7 +7,7 @@ import AuthLayout from './layouts/AuthLayout/AuthLayout'
 
 function App() {
   return (
-    <div className="">
+    <div className="overflow-x-hidden">
       <Routes>
 
         {/* Public Routes */}

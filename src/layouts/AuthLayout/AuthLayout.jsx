@@ -1,12 +1,18 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import useProgressiveImg from "../../hooks/useProgressiveImg";
+
 
 const AuthLayout = () => {
+  const [src, { blur }] = useProgressiveImg("src/assets/login_bg_down.png", "src/assets/login_bg.png");
   return (
     <div
-      style={{ backgroundImage: "url('src/assets/login_bg.png')" }}
-      className="w-screen bg-cover bg-center h-screen flex items-center justify-center text-white"
+      className="w-screen object-contain relative bg-center h-screen flex items-center justify-center text-white transition-all"
     >
+    <img
+        src={src}
+        className="w-full h-full absolute top-0 left-0 z-[-1] object-cover transition-all"
+      />
       <div
         style={{
           backgroundImage:
@@ -22,20 +28,3 @@ const AuthLayout = () => {
 
 export default AuthLayout;
 
-
-// <div className="text-sm">
-// <p className="text-[#9AA8AF]">
-//   Don't have an account?{" "}
-//   <Link
-//     to={"/register"}
-//     className="text-main cursor-pointer hover:text-mainHover"
-//   >
-//     {" "}
-//     Create One
-//   </Link>
-// </p>
-// </div>
-
-// <div style={{
-//     backgroundImage: 'linear-gradient(rgba(255,255,255,.4),rgba(255,255,255,.01))'
-//   }} className="shadow border border-[#666666] rounded-[20px] backdrop-blur-md flex flex-col px-2 w-[300px] sm:w-[330px]">
