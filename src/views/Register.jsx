@@ -18,24 +18,23 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
-
     e.preventDefault();
     setLoading(true);
 
-    if(!registerForm.firstname) {
-      toast.error('Firstname can not be empty!')
+    if (!registerForm.firstname) {
+      toast.error("Firstname can not be empty!");
       setLoading(false);
       return;
     }
 
-    if(!registerForm.lastname) {
-      toast.error('Lastname can not be empty!')
+    if (!registerForm.lastname) {
+      toast.error("Lastname can not be empty!");
       setLoading(false);
       return;
     }
 
-    if(!registerForm.password) {
-      toast.error('Password can not be empty!')
+    if (!registerForm.password) {
+      toast.error("Password can not be empty!");
       setLoading(false);
       return;
     }
@@ -46,30 +45,32 @@ const Register = () => {
       return;
     }
 
-
-    console.log(registerForm)
+    console.log(registerForm);
 
     setRegisterForm({
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-    })
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+    });
 
-    await axiosCustom.post(REGISTER_URL, {
-      firstname: registerForm.firstname,
-      lastname: registerForm.lastname,
-      email: registerForm.email,
-      password: registerForm.password,
-    }).then((res)=>{
-      toast.success('Registered succesfully')
-      setTimeout(()=>{
-        navigate('/login')
-      }, 5000)
-    }).catch((err)=> {
-      toast.error('An error occured please try again')
-    })
-  }
+    await axiosCustom
+      .post(REGISTER_URL, {
+        firstname: registerForm.firstname,
+        lastname: registerForm.lastname,
+        email: registerForm.email,
+        password: registerForm.password,
+      })
+      .then((res) => {
+        toast.success("Registered succesfully");
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
+      })
+      .catch((err) => {
+        toast.error("An error occured please try again");
+      });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -79,96 +80,99 @@ const Register = () => {
     });
   };
 
-  
-
   return (
-    <div className="max-w-screen min-h-screen flex items-center justify-center overflow-x-hidden">
-    <div className="flex flex-col gap-6 items-center justify-center pt-20 pb-12">
-
-      <div className="bg-white shadow border-t-2 border-main rounded flex flex-col px-2  w-[310px] sm:w-auto">
-        <div className="p-5 border-b border-[#f9f9f9]">
-          <h3 className="font-bold text-grayUpdated">Register</h3>
+    <>
+      <div className="flex items-center justify-center">
+        <h3 className="font-bold text-white text-3xl">Sign Up</h3>
+      </div>
+      <div className="flex flex-col gap-4 w-[250px] sm:w-[320px]">
+        <div className="flex items-center border-b border-[#B6B6B6] text-[#B6B6B6] focus-within:text-white focus-within:border-white transition-all">
+          <input
+            name="firstname"
+            id="firstname"
+            value={registerForm.firstname}
+            onChange={handleInputChange}
+            type="text"
+            autoComplete="off"
+            placeholder="First Name"
+            className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6]"
+          />
         </div>
-        <div className="p-5 flex flex-col gap-4">
-          <div className="flex flex-row gap-6">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="firstname" className="text-sm font-semibold">
-                First Name
-              </label>
-              <input
-                name="firstname"
-                id="firstname"
-                value={registerForm.firstname}
-                onChange={handleInputChange}
-                type="text"
-                className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="lastname" className="text-sm font-semibold">
-                Last Name
-              </label>
-              <input
-                name="lastname"
-                id="lastname"
-                value={registerForm.lastname}
-                onChange={handleInputChange}
-                type="text"
-                className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
-              />
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-sm font-semibold">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={registerForm.email}
-              onChange={handleInputChange}
-              className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
-            />
-          </div>
-          <div className="flex flex-row gap-6">
-            <div className="flex flex-col gap-1 w-full">
-              <label htmlFor="password" className="text-sm font-semibold">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={registerForm.password}
-                onChange={handleInputChange}
-                className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
-              />
-            </div>
-          </div>
+        <div className="flex items-center border-b border-[#B6B6B6] text-[#B6B6B6] focus-within:text-white focus-within:border-white transition-all">
+          <input
+            name="lastname"
+            id="lastname"
+            value={registerForm.lastname}
+            onChange={handleInputChange}
+            type="text"
+            autoComplete="off"
+            placeholder="Last Name"
+            className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6]"
+          />
         </div>
-        <div className="p-5">
-        <button onClick={handleRegister} style={{boxShadow: '0 2px 6px #acb5f6'}} className="w-full font-semibold bg-main text-black hover:bg-mainHover transition py-2 text-sm rounded">
-          Register
+        <div className="flex items-center border-b border-[#B6B6B6] text-[#B6B6B6] focus-within:text-white focus-within:border-white transition-all">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={registerForm.email}
+            onChange={handleInputChange}
+            placeholder="Email"
+            autoComplete="off"
+            className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6] "
+          />
+        </div>
+        <div className="flex items-center border-b border-[#B6B6B6] text-[#B6B6B6] focus-within:text-white focus-within:border-white transition-all">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            autoComplete="off"
+            value={registerForm.password}
+            onChange={handleInputChange}
+            className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6] "
+          />
+        </div>
+      </div>
+      <div className="w-full">
+        <button
+          onClick={handleRegister}
+          disabled={loading}
+          className="disabled:bg-gray-300 w-full font-semibold bg-[#FF46F8] text-white hover:bg-[#ff46f998] transition py-2 text-sm rounded"
+        >
+          {loading ? "Loading ..." : "Register"}
         </button>
       </div>
-      </div>
 
-      <div className="text-sm">
-        <p className="text-[#9AA8AF]">
-          You already have an account?{" "}
+      <div className="flex items-center justify-center font-light text-sm">
+        <p className="text-white">
+          Already have an accout?{" "}
           <Link
             to={"/login"}
-            className="text-main cursor-pointer hover:text-mainHover"
+            className="text-main font-bold cursor-pointer hover:text-mainHover"
           >
+            {" "}
             Login
           </Link>
         </p>
       </div>
-    </div>
-  </div>
-
-  )
+    </>
+  );
 };
 
 export default Register;
+
+{
+  /* <div className="text-sm">
+<p className="text-[#9AA8AF]">
+  You already have an account?{" "}
+  <Link
+    to={"/login"}
+    className="text-main cursor-pointer hover:text-mainHover"
+  >
+    Login
+  </Link>
+</p>
+</div> */
+}

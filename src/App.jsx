@@ -1,11 +1,9 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Login from './views/Login'
 import { ToastContainer } from 'react-toastify'
 import Register from './views/Register'
+import AuthLayout from './layouts/AuthLayout/AuthLayout'
 
 function App() {
   return (
@@ -13,8 +11,10 @@ function App() {
       <Routes>
 
         {/* Public Routes */}
-        <Route path='/login' element={<Login/>} />
-        <Route path='/register' element={<Register/>} />
+        <Route element={<AuthLayout/>}>
+          <Route path='/login' element={<Login/>} />
+          <Route path='/register' element={<Register/>} />
+        </Route>
 
         {/* Protected Routes */}
       </Routes>
