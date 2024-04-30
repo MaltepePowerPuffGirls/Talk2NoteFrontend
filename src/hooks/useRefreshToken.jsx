@@ -1,11 +1,11 @@
-import axios, { axiosPrivate } from "../services/api";
+import axiosCustom, { axiosPrivate } from "../services/api";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
     const {auth, setAuth} = useAuth();
 
     const refresh = async() => {
-        const response = await axios.post('/api/v1/auth/refresh-token', null, {
+        const response = await axiosCustom.post('/api/v1/auth/refresh-token', null, {
             headers: {
               'Authorization': `Bearer ${auth.accessToken}`
             },

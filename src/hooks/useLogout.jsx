@@ -1,4 +1,4 @@
-import axios from "../services/api";
+import axiosCustom from "../services/api";
 import useAuth from "./useAuth";
 
 const useLogout = () => {
@@ -6,7 +6,7 @@ const useLogout = () => {
 
     const logout = async() => {
         try {
-            const response = await axios.post('/api/v1/auth/logout', null, {
+            const response = await axiosCustom.post('/api/v1/auth/logout', null, {
                 headers: {
                   'Authorization': `Bearer ${auth.accessToken}`
                 },

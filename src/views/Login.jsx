@@ -4,7 +4,8 @@ import useInput from "../hooks/useInput";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useToggle from "../hooks/useToggle";
 import { toast } from "react-toastify";
-import axios from "../services/api";
+import axiosCustom from "../services/api";
+import { MdMail, MdKey } from "react-icons/md";
 
 const LOGIN_URL = "/api/v1/auth/authenticate";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -39,7 +40,7 @@ const Login = () => {
       return;
     }
     try {
-      const response = await axios.post(
+      const response = await axiosCustom.post(
         LOGIN_URL,
         {
           email: user,
@@ -65,76 +66,78 @@ const Login = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen flex items-center justify-center">
-    <div className="flex flex-col gap-6 items-center justify-center pb-12">
-      <div className="bg-white shadow border-t-2 border-main rounded flex flex-col px-2 w-[300px] sm:w-[330px]">
-        <div className="p-5 border-b border-[#f9f9f9]">
-          <h3 className="font-bold text-grayUpdated">Login</h3>
+    <>
+      <div className="flex items-center justify-center">
+        <h3 className="font-bold text-white text-3xl">Log in</h3>
+      </div>
+      <div className="flex flex-col gap-4  w-[250px] sm:w-[320px]">
+        <div className="flex items-center border-b border-[#B6B6B6] text-[#B6B6B6] focus-within:text-white focus-within:border-white transition-all">
+          <input
+            id="email"
+            type="email"
+            placeholder="Email"
+            autoComplete="off"
+            {...userAttribs}
+            className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6]"
+          />
+          <MdMail className="w-[1.5em] h-[1.5em] " />
         </div>
-        <div className="p-5 flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-sm font-semibold">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              {...userAttribs}
-              className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <label htmlFor="password" className="text-sm font-semibold">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-              required
-              className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
-            />
-          </div>
+        <div className="flex items-center border-b border-[#B6B6B6] text-[#B6B6B6] focus-within:text-white focus-within:border-white transition-all">
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+            required
+            className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6] "
+          />
+          <MdKey className="w-[1.5em] h-[1.5em] )]" />
         </div>
+      </div>
 
-        <div className="px-5 flex items-center gap-3 py-3">
+      <div className="">
+        <label
+          htmlFor="persist"
+          className="flex items-center gap-3 cursor-pointer"
+        >
+          <div className="w-[14px] h-[14px] border-2 border-[#B6B6B6] rounded focus-within:border-none focus-within:outline-none transition">
+            {check && <div className="w-full h-full bg-[#B6B6B6]"></div>}
+          </div>
+          <span className="text-grayUpdated text-sm">Remember me</span>
           <input
             type="checkbox"
-            className="w-4 h-4 accent-main transition focus:border-none focus:outline-none"
+            className="hidden"
             onChange={toggleCheck}
             id="persist"
             checked={check}
           />
-          <span className="text-grayUpdated text-sm "> Remember me</span>
-        </div>
-
-        <div className="p-5">
-          <button
-            onClick={handleLogin}
-            style={{ boxShadow: "0 2px 6px #acb5f6" }}
-            disabled={loading}
-            className="disabled:bg-gray-300 w-full font-semibold bg-main text-black hover:bg-mainHover transition py-2 text-sm rounded"
-          >
-            {loading ? "Loading ..." : "Login"}
-          </button>
-        </div>
+        </label>
       </div>
 
-      <div className="text-sm">
-        <p className="text-[#9AA8AF]">
+      <div className="w-full">
+        <button
+          onClick={handleLogin}
+          disabled={loading}
+          className="disabled:bg-gray-300 w-full font-semibold bg-[#FF46F8] text-white hover:bg-[#ff46f998] transition py-2 text-sm rounded"
+        >
+          {loading ? "Loading ..." : "Login"}
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center font-light text-sm">
+        <p className="text-white">
           Don't have an account?{" "}
           <Link
             to={"/register"}
-            className="text-main cursor-pointer hover:text-mainHover"
+            className="text-main font-bold cursor-pointer hover:text-mainHover"
           >
             {" "}
-            Create One
+            Register
           </Link>
         </p>
       </div>
-    </div>
-  </div>
+    </>
   );
 };
 
