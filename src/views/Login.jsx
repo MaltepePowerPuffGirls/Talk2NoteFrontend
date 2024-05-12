@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <>
       <div className="flex items-center justify-center">
-        <h3 className="font-bold text-white text-xl sm:text-3xl">Log in</h3>
+        <h3 className="font-bold text-white text-xl sm:text-2xl mt-5">Log in</h3>
       </div>
       <LoginForm/>
       <div className="flex items-center justify-center font-light text-xs sm:text-sm">

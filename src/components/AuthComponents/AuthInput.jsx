@@ -6,7 +6,7 @@ const AuthInput = ({ inputAttribs, isLoginInput, Icon }) => {
       <input
         autoComplete="off"
         required
-        className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6] "
+        className="bg-transparent w-full py-2 pr-1 transition outline-none placeholder-[#B6B6B6] focus-within:placeholder-white transition-all "
         {...inputAttribs}
       />
       {isLoginInput && <Icon className="w-[1.5em] h-[1.5em] " />}
