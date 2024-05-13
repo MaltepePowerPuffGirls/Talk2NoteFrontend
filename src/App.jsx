@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import Register from './views/Register'
 import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import { useEffect } from 'react'
-
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
