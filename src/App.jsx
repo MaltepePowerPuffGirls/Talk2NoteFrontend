@@ -6,6 +6,8 @@ import Register from './views/Register'
 import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import { useEffect } from 'react'
 import "react-toastify/dist/ReactToastify.css";
+import Home from './views/Home'
+import MainLayout from './layouts/MainLayout/MainLayout'
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,6 +24,10 @@ function App() {
         <Route element={<AuthLayout/>}>
           <Route path='/login' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
+        </Route>
+
+        <Route element={<MainLayout/>}>
+          <Route path='/notes' element={<Home/>} />
         </Route>
 
         {/* Protected Routes */}

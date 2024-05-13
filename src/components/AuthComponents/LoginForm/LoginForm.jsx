@@ -41,6 +41,9 @@ const LoginForm = () => {
       setLoading(false);
       return;
     }
+
+    navigate('/notes')
+    return;
     try {
       const response = await axiosCustom.post(
         LOGIN_URL,
