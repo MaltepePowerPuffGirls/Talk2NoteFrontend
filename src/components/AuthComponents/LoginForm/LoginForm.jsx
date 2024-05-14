@@ -15,7 +15,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LoginForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/notes";
   const [user, resetUser, userAttribs] = useInput("user", "");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -41,9 +41,6 @@ const LoginForm = () => {
       setLoading(false);
       return;
     }
-
-    navigate('/notes')
-    return;
     try {
       const response = await axiosCustom.post(
         LOGIN_URL,
