@@ -9,18 +9,18 @@ const Create = () => {
   const [value, setValue] = useState("");
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
-      setValue(result ?? result.join(''))
+      setValue(result)
     },
   });
 
   useEffect(()=>{
-    console.log(value)
+    console.log("value changed")
   }, [value])
 
   const onListen = () => {
     listen({ lang: 'en-US', continuous: true });
   };
-  
+
   return (
     <div className="px-12 mt-5 flex flex-col gap-5 text-white pb-12">
       <div className="flex items-center justify-between">
@@ -50,7 +50,6 @@ const Create = () => {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           className="w-full h-64 border border-white rounded flex items-center relative justify-center bg-transparent focus:outline-none resize-none"
-          disabled
         />
         <div
           className="mic-icon cursor-pointer absolute -bottom-[32px] left-1/2 -translate-x-1/2 rounded-full w-16 h-16 flex items-center justify-center"
