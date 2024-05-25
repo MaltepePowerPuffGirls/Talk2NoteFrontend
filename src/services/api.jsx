@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = process.env.BACKEND_BASE_URL || "http://localhost:8080";
+const BASE_URL = "http://localhost:8080";
+// browser cannot compile process. will be fixed later
 
 export default axios.create({
     baseURL: BASE_URL,
