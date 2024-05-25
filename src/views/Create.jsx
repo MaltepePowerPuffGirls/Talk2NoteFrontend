@@ -9,12 +9,12 @@ const Create = () => {
   const [value, setValue] = useState("");
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
-      setValue(result)
+      setValue(result ?? result.join(''))
     },
   });
 
   useEffect(()=>{
-    console.log("value changed")
+    console.log(value)
   }, [value])
 
   const onListen = () => {
@@ -50,6 +50,7 @@ const Create = () => {
           value={value}
           onChange={(event) => setValue(event.target.value)}
           className="w-full h-64 border border-white rounded flex items-center relative justify-center bg-transparent focus:outline-none resize-none"
+          disabled
         />
         <div
           className="mic-icon cursor-pointer absolute -bottom-[32px] left-1/2 -translate-x-1/2 rounded-full w-16 h-16 flex items-center justify-center"

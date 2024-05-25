@@ -11,11 +11,8 @@ const Navbar = () => {
       <h1 className='text-white text-xl sm:text-3xl font-bold'>TALK2NOTE</h1>
       <button 
       onClick={logout}
-      className='flex items-center gap-3 text-white text-base sm:text-xl font-semibold px-3 py-2 rounded-[50px]' style={{
-        background: 'linear-gradient(to top right, #ED213A 7%, #93291E 94%)',
-        boxShadow: '0px 4px 4px #00000040'   
-      }}>
-        <BiLogOutCircle className='w-[1.3em] h-[1.3em] sm:w-[1.8em] sm:h-[1.8em] bg-[rgba(0,0,0,0.3)] rounded-full py-[3px]  sm:py-[6px]'/>
+      className='flex items-center gap-1 text-white text-base sm:text-lg bg-transparent border-white border-2  font-semibold px-3 py-2 rounded-[50px]'>
+        <BiLogOutCircle className='w-[1.3em] h-[1.3em] sm:w-[1.8em] sm:h-[1.8em] rounded-full py-[3px]  sm:py-[6px]'/>
         Log out
       </button>
     </div>
