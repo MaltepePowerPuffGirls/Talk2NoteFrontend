@@ -53,18 +53,25 @@ const NoteCard = ({ note, setIsChanged }) => {
     setIsChanged(false);
   }, [])
   return (
-    <div className="col-span-12 cursor-pointer sm:col-span-3 relative bg-transparent border-2 border-[#A899D9] text-white rounded-[20px]  px-5 flex flex-col py-20 items-center justify-center gap-2" style={{
+    <div className=" note-card col-span-12 flex items-center justify-center cursor-pointer sm:col-span-3 relative bg-transparent border-2 border-[#A899D9] text-white rounded-[20px] px-5 py-20 " style={{
     }}>
-        <div className="icons cursor-pointer absolute top-5 right-5 flex items-center justify-center gap-3 ">
-          <FaStar onClick={addToFavs} className="w-[1.2em] h-[1.2em] hover:scale-125 transition-all" style={{
-            color: note.pinned ? "#FFD700" : "#A899D9"
-          }}
-
-          />
-          <FaTrash onClick={deleteNote} className="w-[1.2em] h-[1.2em] text-[#A899D9] hover:scale-125 transition-all"/>
-        </div>
+      <div className='front absolute flex flex-col items-center gap-2'>
         <h2 className="text-lg font-bold text-white">{note.note_title}</h2>
         <p className="font-bold text-xs text-[#A899D9]">{modifiedText}</p>
+      </div>
+      <div className='back absolute flex flex-col items-center gap-2'>
+        <p>{note.description}</p>
+      </div>
+      <div className='absolute top-5 right-5 flex items-center justify-center gap-2'>
+        <FaStar className='w-[1.2em] h-[1.2em] hover:scale-125 transition-all' style={{
+          color: note.pinned ? "#FFD700" : "#A899D9"
+        }}
+        onClick={addToFavs}
+        />
+        <FaTrash className='w-[1.2em] h-[1.2em] text-[#A899D9]  hover:scale-125 transition-all'
+        onClick={deleteNote}
+        />
+      </div>
       </div>
   )
 }

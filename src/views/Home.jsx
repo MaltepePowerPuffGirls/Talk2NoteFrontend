@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FaSearch, FaStar, FaTrash } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import { IoFilterSharp } from "react-icons/io5";
 import { IoIosCopy } from "react-icons/io";
 import Modal from "../components/HomeComponents/Modal/Modal";
@@ -15,6 +15,11 @@ const Home = () => {
   const { notes, setNotes } = useNote();
   const { auth } = useAuth();
   const [isChanged, setIsChanged] = useState();
+  const [filter, setFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("newest");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const dropdownRef = useRef(null);
 
   const fetchNotes = async () => {
     const noteResponse = await axios.get("/api/v1/note", {
@@ -25,12 +30,63 @@ const Home = () => {
     return noteResponse.data.data;
   };
 
+  const sortNotes = (notes) => {
+    if (sortOrder === "newest") {
+      return notes.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    } else if (sortOrder === "oldest") {
+      return notes.sort(
+        (a, b) => new Date(a.created_at) - new Date(b.created_at)
+      );
+    } else {
+      return notes.sort((a, b) => {
+        if (a.pinned && !b.pinned) {
+          return -1;
+        } else if (!a.pinned && b.pinned) {
+          return 1;
+        } else {
+          return new Date(b.created_at) - new Date(a.created_at);
+        }
+      });
+    }
+  };
+
+  const filterNotes = (notes) => {
+    if (searchTerm) {
+      return notes.filter((note) =>
+        note.note_title
+          .toLowerCase()
+          .trim()
+          .includes(searchTerm.toLowerCase().trim())
+      );
+    }
+    if (filter === "starred") {
+      return notes.filter((note) => note.pinned);
+    } else if (filter === "unstarred") {
+      return notes.filter((note) => !note.pinned);
+    } else if (filter === "all") {
+      return notes.sort((a, b) => {
+        if (a.pinned && !b.pinned) {
+          return -1;
+        } else if (!a.pinned && b.pinned) {
+          return 1;
+        } else {
+          return new Date(b.created_at) - new Date(a.created_at);
+        }
+      });
+    }
+    return notes;
+  };
+
   const { execute: getAllNotes, isLoading, error } = useLoading(fetchNotes);
 
   const getNotes = () => {
     getAllNotes()
       .then((data) => {
-        setNotes(data);
+        let filteredNotes = filterNotes(data);
+        let sortedNotes = sortNotes(filteredNotes);
+        setNotes(sortedNotes);
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
@@ -44,27 +100,115 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    getNotes();
+  }, [filter, sortOrder, searchTerm]);
+
+  useEffect(() => {
     isChanged && getNotes();
   }, [isChanged]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+    if (newFilter === "all") {
+      setSortOrder("default");
+    }
+  };
+
+  const handleSortOrderChange = (newSortOrder) => {
+    setSortOrder(newSortOrder);
+    setFilter("none");
+  };
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
-    <div className="px-12 mt-5 flex flex-col gap-5">
+    <div className="px-12 mt-5 flex flex-col gap-12">
       <div className="search-area flex items-center justify-between w-full">
         <div className="flex items-center justify-center gap-4">
           <div className="relative">
             <input
               className="pl-10 peer text-base transition-all group-first focus:placeholder-white bg-transparent border-2 border-[#A899D9] rounded-[15px] py-2 pr-4 focus:outline-none placeholder-[#A899D9] font-semibold text-white"
               placeholder="Search for a note"
+              value={searchTerm}
+              onChange={handleSearch}
             />
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FaSearch className="text-[#A899D9] peer-focus:text-white" />
             </div>
           </div>
 
-          <button className="flex items-center justify-center gap-3 text-base text-white">
-            <IoFilterSharp />
-            Filter
-          </button>
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center justify-center gap-3 text-base text-white rounded-[15px] py-2 px-4"
+            >
+              <IoFilterSharp />
+              Filter
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute mt-2 w-48 border border-[#A899D9] bg-[#33126E] text-white shadow-lg rounded-md z-10">
+                <button
+                  onClick={() => {
+                    handleFilterChange("all");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:text-[#A899D9]"
+                >
+                  All Notes
+                </button>
+                <button
+                  onClick={() => {
+                    handleFilterChange("starred");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:text-[#A899D9]"
+                >
+                  Starred
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortOrderChange("newest");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:text-[#A899D9]"
+                >
+                  Newest to oldest
+                </button>
+                <button
+                  onClick={() => {
+                    handleSortOrderChange("oldest");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:text-[#A899D9]"
+                >
+                  Oldest to newest
+                </button>
+                <button
+                  onClick={() => {
+                    handleFilterChange("unstarred");
+                    setIsDropdownOpen(false);
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:text-[#A899D9]"
+                >
+                  Unstarred
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         <div>
           <button
@@ -77,20 +221,26 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="note-area w-full grid grid-cols-12 gap-12">
+      <div className="note-area w-full grid grid-cols-12 gap-24">
         {isLoading ? (
           <div className="w-screen h-[calc(100vh-250px)] ml-[-30px] flex items-center justify-center">
             <LoadingSpinner />
           </div>
-        ) :
-        (
-          notes?.map((note)=>(
-            <NoteCard key={note.id} note={note} setIsChanged={setIsChanged}/>
+        ) : notes?.length > 0 ? (
+          notes.map((note) => (
+            <NoteCard key={note.id} note={note} setIsChanged={setIsChanged} />
           ))
-        )
-      }
+        ) : (
+          <div className="text-white text-2xl text-center col-span-12">
+            No notes found.
+          </div>
+        )}
       </div>
-      <Modal setIsChanged={setIsChanged} isOpen={isOpen} onClose={() => setIsOpen(false)}></Modal>
+      <Modal
+        setIsChanged={setIsChanged}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      ></Modal>
     </div>
   );
 };

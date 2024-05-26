@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+  }
+}
+
+
+.note-card {
+    transition: .6s ease-in;
+    transform-style: preserve-3d;
+}
+
+.note-card:hover{
+    transform: rotateY(180deg);
+}
+
+.back {
+    transform: rotateY(-180deg);
+    z-index: 50;
+    backface-visibility: hidden;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.front {
+    z-index: 100;
+    backface-visibility: hidden;
+    width: 100%;
+    margin: 0 auto;
+}

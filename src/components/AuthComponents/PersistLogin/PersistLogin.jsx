@@ -3,6 +3,7 @@ import useAuth from "../../../hooks/useAuth";
 import useLocalStorage from "../../../hooks/useLocalStorage";
 import { Outlet } from "react-router-dom";
 import useRefreshToken from "../../../hooks/useRefreshToken";
+import LoadingSpinner from "../../CommonComponents/Loading/Loading";
 
 const PersistLogin = () => {
   const [ loading, setLoading ] = useState(true);
@@ -29,8 +30,8 @@ const PersistLogin = () => {
   }, []);
 
   return (
-    <>{!persist ? <Outlet /> : loading ? <div className="w-screen h-screen bg-black">
-         Loading...
+    <>{!persist ? <Outlet /> : loading ?  <div className="w-screen h-screen ml-[-30px] bg-[#522E97] flex items-center justify-center">
+         <LoadingSpinner/>
     </div> : <Outlet />}</>
   );
 };

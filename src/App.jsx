@@ -20,7 +20,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-y-hidden no-scrollbar">
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>
