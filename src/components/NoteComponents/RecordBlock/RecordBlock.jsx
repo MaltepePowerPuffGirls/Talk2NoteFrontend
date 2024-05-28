@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaMicrophone, FaSquare } from 'react-icons/fa'
 
-const RecordBlock = ({isListening, value, setValue, startStopListening, setIsEdited}) => {
+const RecordBlock = ({isListening, value, setValue, startStopListening, sendBlock, changeStatus}) => {
   
   return (
     <div className="relative">
@@ -29,8 +29,8 @@ const RecordBlock = ({isListening, value, setValue, startStopListening, setIsEdi
       {isListening ? (
         <FaSquare
           onClick={()=>{
+            sendBlock()
             startStopListening()
-            setIsEdited(false)
           }}
           className="text-white w-[2em] h-[2em]"
         />
@@ -38,13 +38,13 @@ const RecordBlock = ({isListening, value, setValue, startStopListening, setIsEdi
         <FaMicrophone
           onClick={()=>{
             startStopListening()
-            setIsEdited(true)
+            changeStatus("RECORDING"); // Bu satırı güncelleyelim
           }}
           className="text-[#9900B1] w-[2.5em] h-[2.5em]"
         />
       )}
     </div>
-    <div className="absolute bottom-3 right-3 text-[#A899D9]">{value.length}/5000</div>
+    <div className="absolute bottom-3 right-3 text-[#A899D9]">{value.length}/1000</div>
   </div>
   )
 }

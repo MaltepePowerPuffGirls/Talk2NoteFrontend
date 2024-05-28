@@ -6,6 +6,7 @@ import axios from "../../../services/api";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 import useNote from "../../../hooks/useNote";
+import { FaCaretDown } from "react-icons/fa";
 
 export default function Modal({ isOpen, onClose, setIsChanged }) {
   const [formData, setFormData] = useState({
@@ -87,11 +88,10 @@ export default function Modal({ isOpen, onClose, setIsChanged }) {
       });
       setLoading(false);
       setIsChanged(true);
-      console.log(lastEl)
       onClose();
       
     } catch (err) {
-      toast.error("An error occured");
+      toast.error("An error occured", err);
       setLoading(false);
     }
   };
@@ -115,10 +115,13 @@ export default function Modal({ isOpen, onClose, setIsChanged }) {
             value={formData.title}
             onChange={handleInputChange}
           />
+          <div
+          className="relative"
+          >
           <select
             name="priority"
             id="priority"
-            className="bg-transparent border border-[#A899D9] rounded px-3 py-2 pr-12 focus:outline-none"
+            className="bg-transparent cursor-pointer border border-[#A899D9] rounded px-3 py-2 pr-12 focus:outline-none appearance-none -webkit-appearance-none w-full h-full"
             value={formData.priority}
             onChange={handleInputChange}
           >
@@ -127,10 +130,16 @@ export default function Modal({ isOpen, onClose, setIsChanged }) {
             <option value="MEDIUM">Medium</option>
             <option value="LOW">Low</option>
           </select>
+          <FaCaretDown className="absolute right-2 w-[1.3em] h-[1.3em] top-1/2 -translate-y-1/2 "/>
+          </div>
+
+          <div
+          className="relative cursor-pointer"
+          >
           <select
             name="noteType"
             id="noteType"
-            className="!bg-transparent !border !border-[#A899D9] rounded px-3 py-2 pr-12 focus:outline-none "
+            className="!bg-transparent cursor-pointer !border !border-[#A899D9] rounded px-3 py-2 pr-12 focus:outline-none appearance-none -webkit-appearance-none w-full h-full"
             value={formData.noteType}
             onChange={handleInputChange}
           >
@@ -139,6 +148,8 @@ export default function Modal({ isOpen, onClose, setIsChanged }) {
             <option value="MATHEMATICIAN">Mathematician</option>
             <option value="HISTORIAN">Historian</option>
           </select>
+          <FaCaretDown className="absolute right-2 w-[1.3em] h-[1.3em] top-1/2 -translate-y-1/2 "/>
+          </div>
           <textarea
             placeholder="Description"
             className="bg-transparent h-36 resize-none border border-[#A899D9] rounded px-3 py-2 focus:outline-none"

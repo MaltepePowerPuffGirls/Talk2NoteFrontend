@@ -20,7 +20,7 @@ const Create = () => {
   const { id } = useParams();
   const { auth } = useAuth();
   const [blockData, setBlockData] = useState([]);
-  const [isEdited, setIsEdited] = useState(false);
+  const [isEdited, setIsEdited] = useState();
 
   const {
     isListening,
@@ -64,23 +64,23 @@ const Create = () => {
     getOneNote();
   }, []);
 
-  useEffect(() => {
-    if (finalTranscript.length > 100) {
-      saveValue();
+  const sendBlock = async () => {
+    if (finalTranscript.length > 250) {
       const newBlock = { text: finalTranscript };
       setBlockData((prevBlockData) => {
-        const blockAlreadyExists = prevBlockData.some(block => block.text === finalTranscript);
+        const blockAlreadyExists = prevBlockData.some(
+          (block) => block.text === finalTranscript
+        );
         if (!blockAlreadyExists) {
           saveBlockData(finalTranscript);
           return [...prevBlockData, newBlock];
         }
         return prevBlockData;
       });
-      setFinalTranscript(""); 
-      changeStatus("STOPPED")
-      setIsEdited(false);
+      setFinalTranscript("");
     }
-  }, [finalTranscript]); 
+    await changeStatus("STOPPED");
+  };
 
   const changeStatus = async (status) => {
     try {
@@ -99,7 +99,7 @@ const Create = () => {
           },
         }
       );
-      setNote({ ...note, note_status: status });
+      getOneNote();
     } catch (error) {
       console.log(error);
       toast.error(
@@ -108,17 +108,9 @@ const Create = () => {
     }
   };
 
-  useEffect(() => {
-    if (isEdited) {
-      changeStatus("RECORDING");
-    } else {
-      changeStatus("STOPPED");
-    }
-  }, [isEdited]);
-
   const saveBlockData = async (blockText) => {
     try {
-      const response = await axios.post(
+      const response = axios.post(
         `/api/v1/note/${id}/block`,
         {
           modified: false,
@@ -131,7 +123,6 @@ const Create = () => {
           },
         }
       );
-      console.log(response.data.data);
     } catch (err) {
       toast.error("An error occured while saving block data", err);
     }
@@ -155,7 +146,6 @@ const Create = () => {
         <>
           <NoteTitle
             noteStatus={note?.note_status}
-            changeStatus={changeStatus}
             title={note?.note_title}
             id={note?.id}
           />
@@ -166,6 +156,8 @@ const Create = () => {
             startStopListening={startStopListening}
             saveValue={saveValue}
             setIsEdited={setIsEdited}
+            changeStatus={changeStatus}
+            sendBlock={sendBlock}
           />
           {blockData.map((bData, index) => (
             <NoteBlock key={index} text={bData.text} />
