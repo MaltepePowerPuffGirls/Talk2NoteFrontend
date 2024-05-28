@@ -136,12 +136,12 @@ const Home = () => {
   };
 
   return (
-    <div className="px-12 mt-5 flex flex-col gap-12">
-      <div className="search-area flex items-center justify-between w-full">
-        <div className="flex items-center justify-center gap-4">
-          <div className="relative">
+    <div className="px-5 sm:px-12 mt-5 flex flex-col gap-6 sm:gap-12">
+      <div className="search-area flex sm:flex-row flex-col items-center justify-between w-full sm:w-auto">
+        <div className="flex sm:flex-row flex-col items-center justify-center gap-4 w-full sm:w-auto">
+          <div className="relative w-full sm:w-auto">
             <input
-              className="pl-10 peer text-base transition-all group-first focus:placeholder-white bg-transparent border-2 border-[#A899D9] rounded-[15px] py-2 pr-4 focus:outline-none placeholder-[#A899D9] font-semibold text-white"
+              className="pl-10 peer text-sm sm:text-base w-full sm:w-auto transition-all group-first focus:placeholder-white bg-transparent border-2 border-[#A899D9] rounded-[15px] py-2 pr-4 focus:outline-none placeholder-[#A899D9] font-semibold text-white"
               placeholder="Search for a note"
               value={searchTerm}
               onChange={handleSearch}
@@ -151,16 +151,16 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="relative" ref={dropdownRef}>
+          <div className="relative w-full sm:w-auto" ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center justify-center gap-3 text-base text-white rounded-[15px] py-2 px-4"
+              className="flex items-center justify-center gap-3 text-sm sm:text-base border-2 border-[#A899D9] sm:border-0  text-white rounded-[15px] py-2 px-4 w-full"
             >
               <IoFilterSharp />
               Filter
             </button>
             {isDropdownOpen && (
-              <div className="absolute mt-2 w-48 border border-[#A899D9] bg-[#33126E] text-white shadow-lg rounded-md z-10">
+              <div className="absolute text-sm sm:text-base mt-2 w-48 border border-[#A899D9] bg-[#33126E] text-white shadow-lg rounded-md z-10">
                 <button
                   onClick={() => {
                     handleFilterChange("all");
@@ -210,10 +210,10 @@ const Home = () => {
             )}
           </div>
         </div>
-        <div>
+        <div className="w-full sm:w-auto mt-4 sm:mt-0">
           <button
             onClick={() => setIsOpen(true)}
-            className="rounded-[15px] text-white py-2 px-3 font-semibold text-base flex items-center justify-center gap-2 border-2 border-[#A899D9]"
+            className="rounded-[15px] text-white py-2 px-3 font-semibold flex items-center justify-center gap-2 border-2 border-[#A899D9] w-full sm:w-auto text-sm sm:text-base"
           >
             <IoIosCopy />
             New Note
@@ -221,7 +221,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="note-area w-full grid grid-cols-12 gap-24">
+      <div className="note-area sm:w-full grid grid-cols-12 sm:gap-24 gap-8">
         {isLoading ? (
           <div className="w-screen h-[calc(100vh-250px)] ml-[-30px] flex items-center justify-center">
             <LoadingSpinner />

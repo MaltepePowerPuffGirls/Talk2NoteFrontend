@@ -46,7 +46,10 @@ function App() {
         {/* Protected Routes */}
       </Routes>
 
-      <ToastContainer />
+      <ToastContainer toastStyle={{
+        backgroundColor: "#421582",
+        color:"white"
+      }} />
     </div>
   );
 }
