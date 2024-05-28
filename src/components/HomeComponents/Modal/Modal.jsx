@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../../services/api";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
+import useNote from "../../../hooks/useNote";
 
 export default function Modal({ isOpen, onClose, setIsChanged }) {
   const [formData, setFormData] = useState({
@@ -21,11 +22,13 @@ export default function Modal({ isOpen, onClose, setIsChanged }) {
     setIsChanged(false);
   }, []);
 
+
   useEffect(() => {
     console.log(formData);
   }, [formData]);
 
   if (!isOpen) return null;
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +87,9 @@ export default function Modal({ isOpen, onClose, setIsChanged }) {
       });
       setLoading(false);
       setIsChanged(true);
+      console.log(lastEl)
       onClose();
+      
     } catch (err) {
       toast.error("An error occured");
       setLoading(false);

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { FaStar, FaTrash } from 'react-icons/fa'
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const NoteCard = ({ note, setIsChanged }) => {
   const today = new Date();
@@ -11,6 +12,7 @@ const NoteCard = ({ note, setIsChanged }) => {
   const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
   const modifiedText = differenceInDays === 0 ? "Today" : `${differenceInDays} days ago`;
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const addToFavs = async () => {
     try {
@@ -55,7 +57,7 @@ const NoteCard = ({ note, setIsChanged }) => {
   return (
     <div className=" note-card col-span-12 flex items-center justify-center cursor-pointer sm:col-span-3 relative bg-transparent border-2 border-[#A899D9] text-white rounded-[20px] px-5 py-20 " style={{
     }}>
-      <div className='front absolute flex flex-col items-center gap-2'>
+      <div onClick={()=>navigate(`/notes/${note.id}`)}  className='front absolute flex flex-col items-center gap-2'>
         <h2 className="text-lg font-bold text-white">{note.note_title}</h2>
         <p className="font-bold text-xs text-[#A899D9]">{modifiedText}</p>
       </div>

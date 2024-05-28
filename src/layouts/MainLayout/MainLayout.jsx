@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
   return (
-    <div className='min-h-screen max-w-screen bg-home bg-cover pb-20'>
+    <div className='h-screen max-w-screen bg-home bg-cover pb-20 custom-scrollbar overflow-auto'>
       <Navbar/>
       <Outlet/>
     </div>

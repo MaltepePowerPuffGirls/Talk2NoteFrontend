@@ -11,6 +11,7 @@ import MainLayout from "./layouts/MainLayout/MainLayout";
 import PersistLogin from "./components/AuthComponents/PersistLogin/PersistLogin";
 import RequireAuth from "./components/AuthComponents/RequireAuth/RequireAuth";
 import Create from "./views/Create";
+import NoteDetails from "./views/NoteDetails";
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,7 +21,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="overflow-y-hidden no-scrollbar">
+    <div className="custom-scrollbar overflow-auto">
       <Routes>
         {/* Public Routes */}
         <Route element={<AuthLayout />}>
@@ -31,10 +32,13 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<MainLayout />}>
             <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
-              <Route path="/notes" element={<Home />} />
+              <Route path="/notes" element={<Home />}/>
             </Route>
             <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
-              <Route path="/create-note/:id" element={<Create />} />
+              <Route path="/notes/:id" element={<NoteDetails />} />
+            </Route>
+            <Route element={<RequireAuth allowedRoles={["ADMIN", "USER"]} />}>
+              <Route path="/notes/create/:id" element={<Create />} />
             </Route>
           </Route>
         </Route>
