@@ -32,6 +32,7 @@ const Create = () => {
     saveValue,
   } = useSpeechToText({
     continuous: true,
+    // lang: "tr-TR"
   });
 
   useEffect(() => {

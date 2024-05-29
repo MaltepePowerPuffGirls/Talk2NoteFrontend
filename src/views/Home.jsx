@@ -221,7 +221,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="note-area sm:w-full grid grid-cols-12 sm:gap-24 gap-8">
+      <div className="sm:w-full grid grid-cols-12 xl:gap-24 sm:gap-12 lg:gap-6 gap-8">
         {isLoading ? (
           <div className="w-screen h-[calc(100vh-250px)] ml-[-30px] flex items-center justify-center">
             <LoadingSpinner />
@@ -231,10 +231,11 @@ const Home = () => {
             <NoteCard key={note.id} note={note} setIsChanged={setIsChanged} />
           ))
         ) : (
-          <div className="text-white text-2xl text-center col-span-12">
+        <div className="text-white text-2xl text-center col-span-12">
             No notes found.
           </div>
         )}
+          
       </div>
       <Modal
         setIsChanged={setIsChanged}

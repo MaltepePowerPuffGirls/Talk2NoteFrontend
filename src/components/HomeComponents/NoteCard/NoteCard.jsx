@@ -10,7 +10,7 @@ const NoteCard = ({ note, setIsChanged }) => {
   const differenceInTime = today.getTime() - modifiedDate.getTime();
   const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
   const modifiedText =
-    differenceInDays === 0 ? "Today" : `${differenceInDays} days ago`;
+    differenceInDays === 0 ? "Today" : `${differenceInDays + 2} days ago`;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const NoteCard = ({ note, setIsChanged }) => {
   return (
     <div
       onClick={() => navigate(`/notes/${note.id}`)}
-      className="note-card  col-span-12 w-full flex items-center justify-center cursor-pointer sm:col-span-4 relative bg-transparent border-2 border-[#A899D9] text-white rounded-[20px] px-5 py-20 "
+      className="note-card col-span-12 w-full flex items-center justify-center cursor-pointer sm:col-span-6 md:col-span-6 lg:col-span-6 xl:col-span-4 relative bg-transparent border-2 border-[#A899D9] text-white rounded-[20px] px-5 py-20 "
     >
       <div className="front absolute flex flex-col items-center justify-center gap-2 p-5">
         <h2 className="text-base md:text-base lg:text-lg font-bold text-white">
