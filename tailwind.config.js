@@ -1,3 +1,5 @@
+import { vitest } from 'vitest';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -14,4 +16,5 @@ export default {
   plugins: [
     require('@tailwindcss/typography'),
   ],
+  types: [vitest/globals]
 }
